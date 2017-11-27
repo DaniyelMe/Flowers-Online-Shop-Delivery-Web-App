@@ -1,0 +1,17 @@
+{
+  "name": "project4",
+  "version": "0.0.1",
+  "description": "Exercise 4",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniyel Menda",
+  "license": "ISC",
+	"devDependencies": {
+		"axios": "^0.17.1"
+	},
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}

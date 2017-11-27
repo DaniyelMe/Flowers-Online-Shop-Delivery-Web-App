@@ -1,0 +1,32 @@
+[
+	{
+		"name": "TLV Flowers world",
+		"description": "Biggest branch in israel",
+		"address": {
+			"street": "zabutinski",
+			"number": "100",
+		},
+		"phone": "052349567",
+		"open": false,
+	},
+	{
+		"name": "Rehovot Flowers center",
+		"description": "Biggest branch in our neighberhood",
+		"address": {
+			"street": "king gorge",
+			"number": "99",
+		},
+		"phone": "054232167",
+		"open": true,
+	},
+	{
+		"name": "Ramat Gan Flowers center",
+		"description": "Biggest branch in... nowhere",
+		"address": {
+			"street": "king gorge",
+			"number": "99",
+		},
+		"phone": "054232467",
+		"open": true,
+	}
+]

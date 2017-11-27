@@ -1,0 +1,22 @@
+[
+	{
+		"username": "Daniyel",
+		"email": "daniyel@gmail.com",
+		"role": "admin"
+	},
+	{
+		"username": "Samuel",
+		"email": "samuel@gmail.com",
+		"role": "supplier"
+	},
+	{
+		"username": "Haim",
+		"email": "Haim@gmail.com",
+		"role": "worker"
+	},
+	{
+		"username": "Benny",
+		"email": "Benny@gmail.com",
+		"role": "client"
+	}
+]
