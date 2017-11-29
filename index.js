@@ -1,7 +1,6 @@
 const express = require('express');
-const fs = require('fs');
-const http = require('http');
 const app = express();
+const ejs = require('ejs');
 
 app.use((req, res, next) => {
 	console.log(`[${req.method}] - ${req.originalUrl}`);
@@ -10,7 +9,17 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-	res.send('You are viewing the homepage');
+	let data = {
+		title: 'test',
+		heading: 'Its working!',
+		array: ['samuel', 'daniyel', 'menahem']
+	};
+
+
+	ejs.renderFile(__dirname + '/templates/index.ejs', data, function(err, renderedTemplate) {
+		if(err) throw err;
+    res.send(renderedTemplate);
+	});
 });
 
 app.get('/users', (req, res) => {
@@ -28,19 +37,6 @@ app.get('/branches', (req, res) => {
 });
 
 
-
-	fs.readFile('./assets/templates/index.html', function (err, html) {
-    if (err) {
-        throw err;
-    }
-    http.createServer(function(request, response) {
-        response.writeHeader(200, {"Content-Type": "text/html"});  // <-- HERE!
-        response.write(html);  // <-- HERE!
-        response.end();
-    }).listen(3000, '127.0.0.1');
-
 app.listen(3000, () => {
-	console.log('server running');
-	});
-
+	console.log('Server running on http://10.0.0.127:3000');
 });

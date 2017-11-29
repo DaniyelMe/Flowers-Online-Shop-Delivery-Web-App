@@ -8,10 +8,11 @@
   },
   "author": "Daniyel Menda",
   "license": "ISC",
-	"devDependencies": {
-		"axios": "^0.17.1"
-	},
+  "devDependencies": {
+    "axios": "^0.17.1"
+  },
   "dependencies": {
+    "ejs": "^2.5.7",
     "express": "^4.16.2"
   }
 }
