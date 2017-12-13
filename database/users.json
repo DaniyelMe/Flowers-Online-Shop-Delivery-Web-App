@@ -1,20 +1,24 @@
 [
 	{
+		"id": "1",
 		"username": "Daniyel",
 		"email": "daniyel@gmail.com",
 		"role": "admin"
 	},
 	{
+		"id": "2",
 		"username": "Samuel",
 		"email": "samuel@gmail.com",
 		"role": "supplier"
 	},
 	{
+		"id": "3",
 		"username": "Haim",
 		"email": "Haim@gmail.com",
 		"role": "worker"
 	},
 	{
+		"id": "4",
 		"username": "Benny",
 		"email": "Benny@gmail.com",
 		"role": "client"
