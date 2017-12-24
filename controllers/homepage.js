@@ -1,5 +1,6 @@
 let app = require('../index');
-const ejs = require('ejs');
+let ejs = require('ejs');
+let path = require('path');
 
 app.get('/', (req, res) => {
 	let data = {
@@ -8,9 +9,8 @@ app.get('/', (req, res) => {
 		array: ['samuel', 'daniyel', 'menahem']
 	};
 
-
-	ejs.renderFile(__dirname + '/templates/index.ejs', data, function(err, renderedTemplate) {
-		if(err) throw err;
-    res.send(renderedTemplate);
+	ejs.renderFile(path.resolve(__dirname, '../templates/index.ejs'), data, function (err, renderedTemplate) {
+		if (err) throw err;
+		res.send(renderedTemplate);
 	});
 });

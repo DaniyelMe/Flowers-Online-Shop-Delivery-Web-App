@@ -15,7 +15,8 @@
 		"id": "3",
 		"username": "Haim",
 		"email": "Haim@gmail.com",
-		"role": "worker"
+		"role": "worker",
+		"disabled": true
 	},
 	{
 		"id": "4",
