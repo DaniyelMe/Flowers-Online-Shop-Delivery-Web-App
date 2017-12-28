@@ -5,7 +5,7 @@ const tables = {
 };
 
 // Database API class.
-// the class is static, it should not be instantiated.
+// The class is static, it should not be instantiated.
 class Database {
 	static get(table, column, value) {
 		if (Object.keys(tables).indexOf(table) === -1) throw Error(`Table name ${table} ins not valid!`);

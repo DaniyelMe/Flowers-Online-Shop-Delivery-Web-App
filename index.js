@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 // Support reading json content.
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 app.use((req, res, next) => {
 	console.log(`[${req.method}] - ${req.originalUrl}`);
