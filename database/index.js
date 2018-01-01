@@ -8,7 +8,7 @@ const tables = {
 // The class is static, it should not be instantiated.
 class Database {
 	static get(table, column, value) {
-		if (Object.keys(tables).indexOf(table) === -1) throw Error(`Table name ${table} ins not valid!`);
+		if (Object.keys(tables).indexOf(table) === -1) throw Error(`Table name ${table} is not valid!`);
 
 		return tables[table].filter(row => row[column] == value);
 	}
