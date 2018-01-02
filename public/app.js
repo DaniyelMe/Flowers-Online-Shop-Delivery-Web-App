@@ -1,33 +1,37 @@
+
 function logUsers() {
   let something = {}
 
   $.ajax('users').done(response => {
     something.one = response;
+    console.log(something.one);
   });
 }
-console.log(document.getElementsByClassName("user")[0]);
+
+
 var Login = document.getElementsByClassName("next")[0].getElementsByClassName("login")[0];
 let Signin = document.getElementsByClassName("next")[0].getElementsByClassName("signup")[1];
 
 Login.addEventListener("click", verify, false);
 
 function verify() {
-/*  $.ajax('users').done(donext =>
-    {
-      if(document.getElementsByClassName("user").value == )
-           && document.getElementsByClassName("pass").value == "workshop" )
-        {
-            alert( "validation succeeded" );
-            location.href="run.html";
-        }
-        else
-        {
-            alert( "validation failed" );
-            location.href="fail.html";
+  let usernameinput = document.getElementsByClassName("user")[0].getElementsByClassName("form-control")[0].value;
+  let passwordinput = document.getElementsByClassName("pass")[0].getElementsByClassName("form-control")[0].value;
+  $.ajax('users').done(response => {
+    response.forEach(
+      function(element){
+    //    alert(element.username + " = " + usernameinput + "\n" + element.password + " = " + passwordinput);
+        if(element.username == usernameinput &&
+           element.password == passwordinput)
+           {
+             alert("all good, we just moved to the shop");
+             break;
+           }
+        else {
+          alert("something is missing");
         }
       }
     )
-    */
-};
-
+  });
+}
 logUsers();

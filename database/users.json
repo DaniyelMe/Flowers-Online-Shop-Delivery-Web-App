@@ -3,25 +3,29 @@
 		"id": "1",
 		"username": "Daniyel",
 		"email": "daniyel@gmail.com",
-		"role": "admin"
+		"role": "admin",
+		"password" : "1234"
 	},
 	{
 		"id": "2",
 		"username": "Samuel",
 		"email": "samuel@gmail.com",
-		"role": "supplier"
+		"role": "supplier",
+		"password" : "1234"
 	},
 	{
 		"id": "3",
 		"username": "Haim",
 		"email": "Haim@gmail.com",
 		"role": "worker",
+		"password" : "1234",
 		"disabled": true
 	},
 	{
 		"id": "4",
 		"username": "Benny",
 		"email": "Benny@gmail.com",
-		"role": "client"
+		"role": "client",
+		"password" : "1234"
 	}
 ]
