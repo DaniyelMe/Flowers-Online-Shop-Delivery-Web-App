@@ -27,19 +27,21 @@
 
 .form {
   max-width: 280px;
-  margin-top: -60px;
-  text-align: center !important;
-  margin-right: auto !important;
-  margin-left: auto !important;
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .brand {
-  width: 40%;
-  display: inline-block;
-  margin-bottom: 1rem !important;
+  display: block;
+  margin-bottom: 30px;
   color: #3097D1;
   text-decoration: none;
   background-color: transparent;
+}
+
+.brand img {
+  max-width: 100%;
 }
 
 .user,
