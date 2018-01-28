@@ -56,6 +56,8 @@ header {
   height: 57px;
   padding: 10px;
   overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.1);
 }
 
 header .logo {
