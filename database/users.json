@@ -1,30 +1,30 @@
 [
 	{
 		"id": "1",
-		"username": "Daniyel",
+		"username": "daniyel",
 		"email": "daniyel@gmail.com",
 		"role": "admin",
 		"password" : "1234"
 	},
 	{
 		"id": "2",
-		"username": "Samuel",
+		"username": "samuel",
 		"email": "samuel@gmail.com",
 		"role": "supplier",
 		"password" : "1234"
 	},
 	{
 		"id": "3",
-		"username": "Haim",
-		"email": "Haim@gmail.com",
+		"username": "haim",
+		"email": "haim@gmail.com",
 		"role": "worker",
 		"password" : "1234",
 		"disabled": true
 	},
 	{
 		"id": "4",
-		"username": "Benny",
-		"email": "Benny@gmail.com",
+		"username": "benny",
+		"email": "benny@gmail.com",
 		"role": "client",
 		"password" : "1234"
 	}

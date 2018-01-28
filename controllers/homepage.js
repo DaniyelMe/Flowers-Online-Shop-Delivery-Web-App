@@ -4,9 +4,7 @@ let path = require('path');
 
 app.get('/', (req, res) => {
 	let data = {
-		title: 'test',
-		heading: 'Its working!',
-		array: ['samuel', 'daniyel', 'menahem']
+		title: 'Login',
 	};
 
 	ejs.renderFile(path.resolve(__dirname, '../templates/index.ejs'), data, function (err, renderedTemplate) {

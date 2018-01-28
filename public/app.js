@@ -1,37 +1,55 @@
+async function login() {
+  let credentials = {username: 'Danyel', password: '1234'};
 
-function logUsers() {
-  let something = {}
+  let response = await fetch('/login', {
+    method: 'POST',
+    body: JSON.stringify(credentials),
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  });
 
-  $.ajax('users').done(response => {
-    something.one = response;
-    console.log(something.one);
+  let data = await response.json();
+
+  console.log(data);
+}
+
+async function fetchFlowers() {
+  let response = await fetch('/flowers');
+  return await response.json();
+}
+
+function createFlowerElement(flowerData) {
+  // Create elements
+  let flowerWrap = document.createElement('div');
+  let flowerImage = document.createElement('img');
+  let flowerTitle = document.createElement('div');
+
+  // Add attributes
+  flowerWrap.setAttribute('class', 'flower-wrap');
+  flowerImage.setAttribute('src', flowerData.image);
+  flowerImage.setAttribute('class', 'flower-image');
+  flowerTitle.setAttribute('class', 'flower-title');
+  flowerTitle.innerHTML = flowerData.name;
+
+  // Nest the elements
+  flowerWrap.appendChild(flowerImage);
+  flowerWrap.appendChild(flowerTitle);
+
+  return flowerWrap;
+}
+
+function renderFlowers(selector, flowersArray) {
+  const flowersContainer = document.querySelector(selector);
+  flowersContainer.innerHTML = null;
+
+  flowersArray.forEach(flower => {
+    let flowerElement = createFlowerElement(flower);
+    flowersContainer.appendChild(flowerElement);
   });
 }
 
-
-var Login = document.getElementsByClassName("next")[0].getElementsByClassName("login")[0];
-let Signin = document.getElementsByClassName("next")[0].getElementsByClassName("signup")[1];
-
-Login.addEventListener("click", verify, false);
-
-function verify() {
-  let usernameinput = document.getElementsByClassName("user")[0].getElementsByClassName("form-control")[0].value;
-  let passwordinput = document.getElementsByClassName("pass")[0].getElementsByClassName("form-control")[0].value;
-  $.ajax('users').done(response => {
-    response.forEach(
-      function(element){
-    //    alert(element.username + " = " + usernameinput + "\n" + element.password + " = " + passwordinput);
-        if(element.username == usernameinput &&
-           element.password == passwordinput)
-           {
-             alert("all good, we just moved to the shop");
-             break;
-           }
-        else {
-          alert("something is missing");
-        }
-      }
-    )
-  });
-}
-logUsers();
+// fetch and then render the flowers.
+fetchFlowers().then(flowers => {
+  renderFlowers('#flowers-container' ,flowers);
+});
