@@ -89,6 +89,10 @@ header .menu a:hover {
   cursor: pointer;
 }
 
+header .menu .active a {
+  background-color: rgb(74, 121, 182);
+}
+
 section h1 {
   color: #555;
   font-weight: lighter;
