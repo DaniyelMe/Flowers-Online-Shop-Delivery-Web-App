@@ -1,0 +1,93 @@
+<style>
+    a {
+        cursor: pointer;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    ul li {
+        cursor: pointer;
+        color: #2c5a7c;
+    }
+
+    ul li:hover {
+        opacity: 0.5;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    h4 {
+        font-size: 14px;
+    }
+
+    .profile-img-card1 {
+        border: 10px solid transparent;
+        margin-bottom: 15px;
+        width: 80px;
+        height: 80px;
+        opacity: 0.7;
+    }
+
+    .profile-img-card1:hover {
+        border-color: #f1f1f1;
+        /*width: 190px;*/
+    }
+
+</style>
+<div class="row">
+    <% if(user && user.role === 'Admin') { %>
+    <div class="col-sm-3">
+        <div class="panel panel-info">
+            <div class="panel-heading clearfix" style="height: 50px;">
+                <H4>New User</H4>
+            </div>
+            <div class="panel-body" style="height: 300px;">
+                <img ng-click="addUser()" class="profile-img-card1"
+                     style="margin-top:55px; height: 180px; width: 180px;"
+                     src="data:image/png;base64,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"/>
+            </div>
+            <div class="panel-footer clearfix" style="height: 50px;">
+            </div>
+        </div>
+    </div>
+    <% } %>
+    <div class="col-sm-3" ng-repeat="u in vm.users">
+        <div class="panel panel-info">
+            <div class="panel-heading" style="height: 50px;">{{u.username}}
+                <% if(user && user.role === 'Admin') { %>
+                <div class="pull-right" style="color: #E9DB70 !important;">
+                    <a href="" ng-if="u.isActive" ng-click="deleteUser(u)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                    <a href="" ng-click="editUser(u)">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                </div>
+                <% } %>
+            </div>
+            <div class="panel-body" style="height: 300px;">
+                <img class="profile-img-card"
+                     src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                     ng-src="{{u.profileImage}}"/>
+                <p>First name: {{u.firstName}}</p>
+                <p>Last name: {{u.lastName}}</p>
+                <% if(user && user.role === 'Admin') { %>
+                <p>role: {{u.role}}</p>
+                <label class="checkbox-inline"><input type="checkbox" disabled ng-model="u.isActive">
+                    is active</label><br>
+                <label class="checkbox-inline"><input type="checkbox" disabled ng-model="u.activated">
+                    activated</label>
+                <% } %>
+            </div>
+            <div class="panel-footer" style="height: 50px;">
+                <div id="{{u.name}}" class="">
+                    <p>email: <a href="" ng-click="sendEmail(u)">{{u.email}}</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="row" ng-if="m.author.username == user.username"
+     style="margin-bottom:15px">
+    <div class="col-sm-2">
+        <img class="profile-img-card"
+             alt="{{m.author.username}}"
+             title="{{m.author.username}}"
+             style="margin:0px;"
+             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+             ng-src="{{m.author.profileImage}}"/>
+    </div>
+    <div class="col-sm-9"
+         style="padding:5px;margin:0;background:#56f7ff;word-wrap: break-word;">
+        <% if(like){ %>
+        <div class="pull-right">
+            <i class="fa fa-thumbs-o-up"
+               style="font-size:20px;" title="like"></i>
+            <span>{{m.likes.length}}</span>
+            <br>
+            <i class="fa fa-thumbs-o-up"
+               title="unlike"
+               style="font-size:20px;transform: rotate(180deg);"></i>
+            <span>{{m.unlikes.length}}</span>
+        </div>
+        <% } %>
+        <p>{{m.content}}</p>
+        <span style="font-size:8px">{{m.createdAt}}</span><br>
+    </div>
+    <br>
+</div>
+<div class="row" ng-if="m.author.username != user.username"
+     style="margin-bottom:15px">
+    <div class="col-sm-9"
+         style="padding:5px 5px 5px 20px;margin:0;background:#e3fffd;word-wrap: break-word;text-align:right">
+        <% if(like){ %>
+        <div class="pull-left">
+            <span>{{m.likes.length}}</span>
+            <i class="fa fa-thumbs-o-up" ng-click="like(true,m)"
+               style="font-size:20px;cursor:pointer;" title="like"></i>
+            <br>
+            <span>{{m.unlikes.length}}</span>
+            <i class="fa fa-thumbs-o-up" ng-click="like(false,m)"
+               title="unlike"
+               style="font-size:20px;transform: rotate(180deg);cursor:pointer;"></i>
+        </div>
+        <% } %>
+        <p>{{m.content}}</p>
+        <span style="font-size:8px">{{m.createdAt}}</span>
+    </div>
+    <div class="col-sm-2">
+        <img class="profile-img-card"
+             alt="{{m.author.username}}"
+             title="{{m.author.username}}"
+             style="margin:0px;"
+             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+             ng-src="{{m.author.profileImage}}"/>
+    </div>
+    <br>
+</div>

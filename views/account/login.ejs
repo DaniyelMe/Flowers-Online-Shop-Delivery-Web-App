@@ -1,0 +1,92 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button ng-click="cancel()" type="button" class="close" data-dismiss="modal"><span
+                    aria-hidden="true">×</span><span
+                    class="sr-only">Close</span></button>
+        <h4 class="modal-title col-sm-7" id="myModalLabel">Login to Flower4u</h4>
+        <img ng-if="vm.dataLoading"
+             src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+        <div class="col-sm-12"
+             ng-class="{ 'alert': vm.flash, 'alert-success': vm.flash.type === 'success','alert-warning': vm.flash.type === 'warning', 'alert-danger': vm.flash.type === 'error' }"
+             ng-if="flash" ng-bind="vm.flash.message"></div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="well">
+                    <img id="profile-img" class="profile-img-card"
+                         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"/>
+                    <form name="form" ng-submit="vm.ok()" role="form" method="post">
+                        <div class="form-group" title="Please enter your username"
+                             ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" name="username" id="username" class="form-control"
+                                       placeholder="example@gmail.com"
+                                       ng-model="vm.user.username" required/>
+                            </div>
+                            <span ng-show="form.username.$dirty && form.username.$error.required"
+                                  class="help-block" style="color:red;">* Username is required</span>
+                        </div>
+                        <div class="form-group" title="Please enter password"
+                             ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                <input type="password" name="password" id="password" class="form-control"
+                                       placeholder="********"
+                                       ng-model="vm.user.password" required/>
+                            </div>
+                            <span ng-show="form.password.$dirty && form.password.$error.required"
+                                  class="help-block" style="color:red;">* Password is required</span>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="remember" id="remember" ng-model="usr.remember">
+                                Remember
+                                me
+                            </label>
+                        </div>
+                        <div class="">
+                            <button type="submit" class="btn btn-success btn-block"
+                                    ng-disabled="form.$invalid || vm.dataLoading">
+                                <span class="glyphicon glyphicon-log-in"></span>&emsp;&emsp;&emsp;&emsp;Login&emsp;&emsp;
+                            </button>
+                        </div>
+                        <h5><a href="" ng-click="forgot()">Forgot password?</a>
+                        </h5>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <h4>Register now for FREE</h4>
+                <ul class="list-unstyled" style="line-height: 2">
+                    <li><span class="fa fa-check text-success"></span> See all your orders</li>
+                    <li><span class="fa fa-check text-success"></span> Save your favorites</li>
+                    <li><span class="fa fa-check text-success"></span> Fast checkout</li>
+                    <li><span class="fa fa-check text-success"></span> Get a gift
+                    </li>
+                    <li><a class="modal-close" data-dismiss="modal" href="" onclick="window.location='#/about'"><u>Read
+                                more</u></a></li>
+                </ul>
+                <p><a class="btn btn-info btn-block"
+                      href="" ng-click="register()"><i class="fa fa-user-plus"></i>&emsp;&emsp;Register now&emsp;</a></p>
+                <h4>or</h4>
+                <button onclick="location=''" data-dismiss="modal" class="btn btn-primary btn-block">
+                    <i style="font-size:20px;" class="fa fa-linkedin-square"></i>
+                    <span class="hidden-xs">&emsp;Log in with Linkedin</span>
+                </button>
+                <br>
+                <!--<h4>or</h4>-->
+                <button onclick="location=''" data-dismiss="modal" class="btn btn-danger btn-block">
+                    <i style="font-size:20px;" class="fa fa-google-plus-square"></i>
+                    <span class="hidden-xs">&emsp;Log in with Google+</span>
+                </button>
+                <br>
+                <!--<h4>or</h4>-->
+                <button onclick="location=''" data-dismiss="modal" class="btn btn-block btn-github btn-social">
+                    <span class="fa fa-github"></span>&emsp;Log in with GitHub
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

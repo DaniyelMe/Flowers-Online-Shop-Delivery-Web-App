@@ -1,0 +1,82 @@
+<div class="modal-conten">
+    <div class="modal-header">
+        <button ng-click="cancel()" type="button" class="close" data-dismiss="modal"><span
+                    aria-hidden="true">×</span><span
+                    class="sr-only">Close</span></button>
+        <h4 class="modal-title col-sm-7" id="myModalLabel"><%= title %>
+        </h4>
+        <img ng-if="vm.dataLoading"
+             src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+        <div class="col-sm-12"
+             ng-class="{ 'alert': vm.flash, 'alert-success': vm.flash.type === 'success','alert-warning': vm.flash.type === 'warning', 'alert-danger': vm.flash.type === 'error' }"
+             ng-if="flash" ng-bind="vm.flash.message"></div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="well">
+                    <form ng-submit="vm.ok()" name="formR" class="form" role="form">
+                        <div class="form-group" title="first name"
+                             ng-class="{ 'has-error': formR.firstName.$dirty && formR.firstName.$error.required }">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" name="firstName" id="firstName" class="form-control"
+                                       placeholder="First name"
+                                       ng-model="vm.user.firstName" required/>
+                            </div>
+                            <span ng-show="formR.firstName.$dirty && formR.firstName.$error.required"
+                                  class="help-block" style="color:red;">* First name is required</span>
+                        </div>
+                        <div class="form-group" title="last name"
+                             ng-class="{ 'has-error': formR.lastName.$dirty && formR.lastName.$error.required }">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" name="lastName" id="lastName" class="form-control"
+                                       placeholder="Last name"
+                                       ng-model="vm.user.lastName" required/>
+                            </div>
+                            <span ng-show="formR.lastName.$dirty && formR.lastName.$error.required"
+                                  class="help-block" style="color:red;">* Last name is required</span>
+                        </div>
+                        <div class="form-group" title="email"
+                             ng-class="{ 'has-error': formR.email.$dirty && formR.email.$error.required }">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="email" name="email" id="email" class="form-control"
+                                       placeholder=" example@gmail.com"
+                                       ng-model="vm.user.email" required/>
+                            </div>
+                            <span ng-show="formR.email.$dirty && formR.email.$error.required"
+                                  class="help-block" style="color:red;">* Email is required</span>
+                        </div>
+                        <div class="form-group" title="username"
+                             ng-class="{ 'has-error': formR.username.$dirty && formR.username.$error.required }">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" name="username" id="usernameR" class="form-control"
+                                       placeholder="username"
+                                       ng-model="vm.user.username" required/>
+                            </div>
+                            <span ng-show="formR.username.$dirty && formR.username.$error.required"
+                                  class="help-block" style="color:red;">* Username is required</span>
+                        </div>
+                        <br>
+                        role: <select ng-init="names=['Admin', 'Worker', 'Customer', 'Provider']"
+                                      ng-model="vm.user.role" ng-options="x for x in names">
+                        </select><br><br>
+                        <label class="checkbox-inline"><input type="checkbox" ng-model="vm.user.isActive">
+                            is active</label><br><br>
+                        <label class="checkbox-inline"><input type="checkbox" ng-model="vm.user.activated">
+                            activated</label><br><br>
+
+                        <div class="">
+                            <button type="submit" class="btn btn-success btn-block">
+                                save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

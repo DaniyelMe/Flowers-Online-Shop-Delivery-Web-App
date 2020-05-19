@@ -1,0 +1,90 @@
+<style>
+    .flower {
+        border: 10px solid #f1f1f1;
+        /*margin-bottom: 15px;*/
+        width: 170px;
+        height: 170px;
+        opacity: 0.7;
+    }
+
+    .flower:hover {
+        border-color: transparent;
+        width: 180px;
+        height: 180px;
+        /*width: 190px;*/
+    }
+
+    /* layout.css Style */
+    .upload-drop-zone {
+        height: 200px;
+        border-width: 2px;
+        margin-bottom: 20px;
+    }
+
+    /* skin.css Style*/
+    .upload-drop-zone {
+        color: #ccc;
+        border-style: dashed;
+        border-color: #ccc;
+        line-height: 200px;
+        text-align: center
+    }
+
+    .upload-drop-zone.drop {
+        color: #222;
+        border-color: #222;
+    }
+</style>
+<% if(user) { %>
+<% if(user.role === 'Admin' || user.role === 'Provider' || user.role === 'Employee') { %>
+<div class="col-sm-4 col-md-2">
+    <div class="panel panel-info">
+        <div class="panel-heading clearfix" style="height: 40px;">
+            <div>
+                <input class="bg-info text-white col-sm-10" type="text" placeholder="Flower Name"/>
+                <a href="#" class="pull-right">
+                    <span class="glyphicon glyphicon-floppy-saved"></span>
+                </a>
+            </div>
+        </div>
+        <div class="panel-body" style="height: 255px;">
+            <input type="file" data-file-model="myFile"/>
+            <button ng-click="uploadFile()">upload me</button>
+            <!-- Standar Form -->
+            <!-- Drop Zone -->
+            <input type="text" placeholder="Flower Color"/>
+        </div>
+        <div class="panel-footer clearfix">
+            <h3><input class="bg-light text-white col-sm-8" type="number" placeholder="Price"/> $</h3>
+        </div>
+    </div>
+</div>
+<% }} %>
+<div class="col-sm-4 col-md-2" ng-repeat="flower in flowers">
+    <div class="panel panel-info">
+        <div class="panel-heading">{{flower.name}}
+            <% if(user) { %>
+            <% if(user.role === 'Admin' || user.role === 'Provider' || user.role === 'Employee') { %>
+            <div class="pull-right">
+                <a href="#">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                <a href="#">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            </div>
+            <% }} %>
+        </div>
+        <div class="panel-body" style="height: 255px;">
+            <a data-toggle="collapse" data-target="#{{flower.name}}" align="center">
+                <img ng-src="{{flower.imageUrl}}" class="img-circle flower img-responsive center-block" alt="Random Name">
+            </a>
+            <p class="collapse" id="{{flower.name}}">color: {{flower.color}}</p>
+        </div>
+        <div class="panel-footer center-block">
+            <div class=" center-block">
+                <h3 class="center-block">{{flower.price}} $</h3>
+            </div>
+        </div>
+    </div>
+</div>

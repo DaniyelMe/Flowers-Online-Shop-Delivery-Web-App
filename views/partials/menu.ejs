@@ -1,0 +1,69 @@
+<style>
+    .btn-circle.btn-xl {
+        width: 70px;
+        height: 70px;
+        font-size: 40px;
+        border-radius: 35px;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+</style>
+
+<div ng-controller="menuCtrl" class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav pull-left">
+                    <li><a href="#!home"> <img src="images/favicon.ico" alt="Logo"
+                                               style="width:20px; margin-right:5px">Flower4u</a></li>
+                </ul>
+                <button type="button" class="navbar-toggle pull-left" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#!home"> <i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="#!about"><i class="fa fa-shield"></i> About</a></li>
+                    <li><a href="#!contact"><i class="fa fa-comment"></i> Contact</a></li>
+                    <li ng-show="user"><a href="#!flowers"><i class="fa fa-pagelines"></i> Flowers</a></li>
+                    <li ng-show="user.role == 'Admin' || user.role == 'Worker'"><a href="#!users"><span
+                                    class="glyphicon glyphicon-list-alt"></span> Users</a></li>
+                </ul>
+                <ul ng-show="user" class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user"></span> Hi {{user.firstName}} <span
+                                    class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                            <li><a href="" ng-click="account()">
+                                    <span class="glyphicon glyphicon-cog"></span> My Account</a></li>
+                            <li><a href="" ng-click="logout()"> <span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul ng-show="!user" class="nav navbar-nav navbar-right">
+                    <li><a href="" ng-click="login()">
+                            <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="" ng-click="register()">
+                            <i class="fa fa-user-plus"></i> Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <a id="myChat"
+       class="btn btn-success btn-circle btn-xl"
+       ng-click="chatOpen()" type="button">
+        <i ng-if="!chatActive" class="fa fa-comments-o" aria-hidden="true"></i>
+        <i ng-if="chatActive" class="fa fa-close" aria-hidden="true" id="rotateColse"
+           style="transform: rotate(90deg);"></i>
+    </a>
+    <%- include('chat') %>
+
+</div>

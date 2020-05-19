@@ -1,0 +1,412 @@
+<style>
+    #popoverChat {
+        position: fixed;
+        bottom: 90px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    #message:focus {
+        outline: none;
+    }
+
+    .tab-pane1 {
+        height: 350px;
+        overflow-y: auto;
+    }
+
+    a {
+        cursor: pointer;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    ul li {
+        cursor: pointer;
+        color: #2c5a7c;
+    }
+
+    ul li:hover {
+        opacity: 0.5;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    h4 {
+        font-size: 14px;
+    }
+
+    .profile-img-card {
+        margin-bottom: 15px;
+        width: 40px;
+        height: 40px;
+        opacity: 0.7;
+    }
+
+    .profile-img-card:hover {
+        border-color: #f1f1f1;
+    }
+
+</style>
+<!--<link href="offline/fonts.googleapis.com/icon.html" rel="stylesheet">-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!--<script src="/socket.io/socket.io.js"></script>-->
+<!--<script src="javascripts/angular/chat.js"></script>-->
+
+<!--<div class="modal-content left-bottom" style="position: fixed; bottom: 50px; right: 30px;">-->
+<!--<div class="temp modal-content" role="docm" data-modal-overflow="true">-->
+<!--<div ng-controller="chatCtrl">-->
+<div ng-if="chatActive" id="popoverChat" class="panel panel-info" style="width: 450px;">
+    <div class="panel-heading" style="height: 50px; overflow-y:auto;">
+
+        <div class="row" style="cursor: pointer;">
+            <div class=" col-sm-1">
+                <i data-toggle="collapse" data-target="#chat-menu"
+                   class="material-icons"
+                   title="chat menu">more_vert</i>
+            </div>
+            <div id="chat-menu" class="collapse in col-sm-10">
+                <i ng-click="getManageGroups();chatPanel.content = 'manageGroup'; changeRoom('','')"
+                   style="cursor: pointer; padding:0 5px"
+                   class="material-icons"
+                   title="manage group">people</i>
+                <i ng-click="chatPanel.content = 'addGroup'; changeRoom('','')" style="cursor: pointer; padding:0 5px"
+                   class="material-icons"
+                   title="add group">group_add</i>
+                <i ng-click="getGroupsToJoin();chatPanel.content = 'joinGroup'; changeRoom('','')"
+                   style="cursor: pointer; padding:0 5px"
+                   class="material-icons"
+                   title="join group">share</i>
+                <i ng-click="chatPanel.content = 'newConversation'; changeRoom('','conversation')"
+                   style="cursor: pointer; padding:0 5px"
+                   class="material-icons"
+                   title="add conversation">add_to_photos </i>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body" style="height:450px; padding:0 5px">
+        <div class="row">
+            <div class="col-sm-3" style="height:450px;overflow-y:auto; ">
+                <label>Groups</label>
+                <ul ng-repeat="g in rooms.groups" class="nav nav-tabs nav-stacked nav-pills" role="tablist">
+                    <li ng-class="{'active': chatPanel.room == g._id}">
+                        <a style="padding:0" class="btn-lg" ng-click="changeRoom(g._id,'group')" href="">{{g.name}}</a>
+                    </li>
+                </ul>
+                <label>conversations</label>
+                <ul ng-repeat="c in rooms.conversations" class="nav nav-tabs nav-stacked nav-pills" role="tablist">
+                    <li ng-class="{'active': chatPanel.room == c._id}">
+                        <a class="btn-lg" ng-click="changeRoom(c._id,'conversation')" href="" style="padding:0">
+                            {{c.name.replace("-"+user.username,"").replace(user.username+'-', "")}}</a>
+                    </li>
+                </ul>
+                <ul class="nav nav-tabs nav-stacked nav-pills" role="tablist">
+                    <li ng-class="{'active': (chatPanel.content == 'generalMessage' && chatPanel.room =='')}">
+                        <a style="padding:0" class="btn-lg"
+                           ng-click="changeRoom('','general'); chatPanel.content = 'generalMessage'"
+                           href="">General</a>
+                    </li>
+                </ul>
+                <label>system</label>
+                <ul class="nav nav-tabs nav-stacked nav-pills" role="tablist">
+                    <li ng-class="{'active': (chatPanel.content == 'systemMessage' && chatPanel.room =='')}">
+                        <a style="padding:0" class="btn-lg"
+                           ng-click="changeRoom('','system'); chatPanel.content = 'systemMessage'"
+                           href="">System</a>
+                    </li>
+                    <li ng-class="{'active': (chatPanel.content == 'userMessage' && chatPanel.room =='')}">
+                        <a style="padding:0" class="btn-lg"
+                           ng-click="changeRoom('','user'); chatPanel.content = 'userMessage'"
+                           href="">User</a>
+                    </li>
+                    <li ng-class="{'active': chatPanel.room == user._id}">
+                        <a style="padding:0" class="btn-lg"
+                           ng-click="chatPanel.content = 'newConversation'; changeRoom('','conversation')"
+                           href="">new</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-9" style="height:450px;">
+                <div id="groups-messages" ng-repeat="g in rooms.groups" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.room == g._id" id="{{g._id}}">
+                        <section>
+                            <div class="list">
+                                <div ng-repeat="m in g.messages" class="list-item overflow">
+                                    <div class="list-item-text">
+                                        <div ng-if="m.type != 'joining' && m.type != 'admin'">
+                                            <%- include('message',{like:true}) %></div>
+                                        <div ng-if="m.type == 'admin' && m.content != 'Add me to the group'">
+                                            <%- include('message',{like:false}) %></div>
+                                        <div ng-if="m.type == 'admin' && m.content == 'Add me to the group'">
+                                            <div class="row"
+                                                 style="margin-bottom:15px">
+                                                <div class="col-sm-9"
+                                                     style="padding:5px 5px 5px 20px;margin:0;background:#e3fffd;word-wrap: break-word;text-align:right">
+                                                    <div class="pull-left">
+                                                        <button ng-click="attachGroup(true,g._id,m._id)">add
+                                                        </button>
+                                                        <br>
+                                                        <button ng-click="attachGroup(false,g._id,m._id)">cancel
+                                                        </button>
+                                                    </div>
+                                                    <p>{{m.content}}</p>
+                                                    <span style="font-size:8px">{{m.createdAt}}</span>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <img class="profile-img-card"
+                                                         alt="{{m.author.username}}"
+                                                         title="{{m.author.username}}"
+                                                         style="margin:0px;"
+                                                         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                                                         ng-src="{{m.author.profileImage}}"/>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <div align="center" ng-if="m.type == 'joining'">
+                                            <p>{{m.content}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div id="conversations-messages" ng-repeat="c in rooms.conversations" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.room == c._id" id="{{c._id}}">
+                        <section>
+                            <div class="list">
+                                <div ng-repeat="m in c.messages" class="list-item">
+                                    <%- include('message',{like:false}) %>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div id="system-messages" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.content == 'systemMessage' && chatPanel.room ==''"
+                         id="systemMessage">
+                        <section>
+                            <div class="list">
+                                <div ng-repeat="m in rooms.system.messages" class="list-item">
+                                    <div class="list-item-text">
+                                        <div class="row"
+                                             style="margin-bottom:15px">
+                                            <div class="col-sm-9"
+                                                 style="padding:5px 5px 5px 20px;margin:0;background:#e3fffd;word-wrap: break-word;text-align:right">
+                                                <div ng-if="m.content == 'Activated my account'" class="pull-left">
+                                                    <button ng-click="attachUser(true,m)">Activate
+                                                    </button>
+                                                    <br>
+                                                    <button ng-click="attachUser(false,m)">Cancel
+                                                    </button>
+                                                </div>
+                                                <p>{{m.content}}</p>
+                                                <span style="font-size:8px">{{m.createdAt}}</span>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <img class="profile-img-card"
+                                                     alt="{{m.author.username}}"
+                                                     title="{{m.author.username}}"
+                                                     style="margin:0px;"
+                                                     src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                                                     ng-src="{{m.author.profileImage}}"/>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div id="general-messages" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.content == 'generalMessage' && chatPanel.room ==''"
+                         id="generalMessage">
+                        <section>
+                            <div class="list">
+                                <div ng-repeat="m in rooms.general.messages" class="list-item" style="padding:0">
+                                    <%- include('message',{like:true}) %>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div id="user-messages" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.content == 'userMessage' && chatPanel.room ==''"
+                         id="userMessage" style="height:450px">
+                        <section>
+                            <div class="list">
+                                <div ng-repeat="m in rooms.user.messages" class="list-item">
+                                    <%- include('message',{like:false}) %>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div id="select-conversation" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.content == '' && chatPanel.room ==''">
+                        <section>
+                            <h4 class="wall" style="text-align:center; margin-top:100px">
+                                Please select a chat<br><br> to start messaging
+                            </h4>
+                        </section>
+                    </div>
+                </div>
+                <div id="manage-groups" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.content == 'manageGroup' && chatPanel.room ==''">
+                        <section>
+                            <label class="pull-right" ng-click="chatPanel.content = ''"
+                                   style="cursor: pointer; right:5px">
+                                <i class="material-icons">cancel</i>
+                            </label>
+                            <h3>Manage Group</h3>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input class="form-control" list="manageGroupsList" type="text"
+                                       placeholder="Enter Group Name" title="Select Group Name"
+                                       ng-model="groups.selection"
+                                       ng-change="setManageGroupSelected()"
+                                       required/>
+                                <datalist id="manageGroupsList">
+                                    <option ng-repeat="g in groups.manage" value="{{g.name}}">
+                                </datalist>
+                            </div>
+                            <div ng-repeat="m in groups.selected.members">
+                                {{m.username}} <a href="" ng-click="removeMember(m)">remove
+                                </a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div id="add-group" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.content == 'addGroup' && chatPanel.room ==''">
+                        <section>
+                            <label class="pull-right" ng-click="chatPanel.content = ''"
+                                   style="cursor: pointer; right:5px">
+                                <i class="material-icons">cancel</i>
+                            </label>
+                            <h3>Add Group</h3>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-comment"></span></span>
+                                <input class="form-control" type="text" name="name" id="name"
+                                       title="Enter name for new group"
+                                       placeholder="Enter name for new group"
+                                       ng-model="newGroup.name" ng-enter="addGroup()" required/>
+                            </div>
+                            <br>
+                            <br>
+                            <button ng-click="addGroup()" style="font-size:24px; toggle-group:center;">
+                                <i class="material-icons">group_add</i> Add Group
+                            </button>
+                        </section>
+                    </div>
+                </div>
+                <div id="join-group" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.content == 'joinGroup' && chatPanel.room ==''">
+                        <section>
+                            <label class="pull-right" ng-click="chatPanel.content = ''"
+                                   style="cursor: pointer; right:5px">
+                                <i class="material-icons">cancel</i>
+                            </label>
+                            <h3>Join Group</h3>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input class="form-control" list="allGroupsList" type="text"
+                                       placeholder="Enter Group Name" title="Enter Group Name"
+                                       ng-model="groups.selected" ng-enter="joinGroup()" required/>
+                                <datalist id="allGroupsList">
+                                    <option ng-repeat="g in groups.toJoin" value="{{g.name}}">
+                                </datalist>
+                            </div>
+                            <br>
+                            <br>
+                            <button ng-click="joinGroup()" style="font-size:24px; toggle-group:center;">
+                                <i class="material-icons">group_add</i> Join Group
+                            </button>
+                        </section>
+                    </div>
+                </div>
+                <div id="add-conversation" class="tab-content">
+                    <div class="tab-pane1" ng-show="chatPanel.content == 'newConversation' && chatPanel.room ==''">
+                        <section>
+                            <label class="pull-right" ng-click="chatPanel.content = ''"
+                                   style="cursor: pointer; right:5px">
+                                <i class="material-icons">cancel</i>
+                            </label>
+                            <h3>Add Conversation</h3>
+                            <div ng-show="!newConversation.forAllUsers">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <input class="form-control" type="text" name="name" id="recipient"
+                                           title="Enter recipients username [or email]"
+                                           placeholder="Enter recipients username [or email]"
+                                           ng-model="newConversation.recipient" required/>
+                                </div>
+                            </div>
+                            <div>
+                                <input id="only-online" type="checkbox" ng-model="newConversation.forAllUsers">
+                                <i class="fa fa-share-alt"></i> send for all users
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div id="new-message"
+                     ng-show="chatPanel.room != '' || chatPanel.content == 'newConversation' || chatPanel.content == 'generalMessage'"
+                     style="position:absolute; bottom:0; width:300px">
+                     <textarea id="msgContent" class="form-control" placeholder="Write a message…"
+                               style="resize:none;
+                      -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none;
+                    padding:0; font-size:15px; border:none; outline:none;"
+                               ng-change="msg.content=='' ? msg.type='': msg.type='text'"
+                               ng-show="msg.type=='' || msg.type=='text'"
+                               ng-model="msg.content" ng-enter="send(msg)"></textarea>
+                    <label ng-if="msg.type=='link'" for="link-url"
+                           style="cursor: pointer; font-size:15px ">
+                        <input id="link-url" type="url" required aria-required="true"
+                               ng-model="msg.content" ng-enter="send(msg)"
+                               style="width:270px; padding:0;
+                               font-size:15px; font-weight: normal; border:none; outline:none;"
+                               pattern="^(https?://)?([a-zA-Z0-9]([a-zA-ZäöüÄÖÜ0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$"
+                               name="url" placeholder="Enter link url...">
+                        <label class="pull-right" ng-click="msg.type = ''"
+                               style="cursor: pointer; padding:0;">
+                            <i class="material-icons">cancel</i>
+                        </label>
+                    </label>
+                    <label for="only-online">
+                        <input id="only-online" type="checkbox" ng-value="onlyOnline">
+                        <span class="glyphicon glyphicon-signal"></span> only online users (no stored)
+                    </label>
+                    <label ng-if="msg.type=='text'" ng-click="send(message)"
+                           style="cursor: pointer; float:right; padding:5px; font-size:15px ">
+                        <span class="glyphicon glyphicon-send"></span>
+                    </label>
+                    <label ng-if="msg.type!='text'" ng-click="msg.type = 'file'" for="file-upload"
+                           style="cursor: pointer; float:right; padding:5px; font-size:15px ">
+                        <span class="glyphicon glyphicon-picture"></span>
+                        <input id="file-upload" ng-model="myFile" type="file" style="display: none;" multiple="multiple"
+                               accept="image/*, video/*, audio/*" title="Send media">
+                    </label>
+                    <label ng-click="msg.type = 'link'" ng-show="msg.type!='text' && msg.type!='file'"
+                           style="cursor: pointer; float:right; padding:5px; font-size:15px ">
+                        <i class="glyphicon glyphicon-link"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="vl" style="border-left: 1px solid gainsboro; height: 450px;
+        position: absolute; left: 25%; bottom:0;padding:0"></div>
+</div>
+
+<!--</div>-->

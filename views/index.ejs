@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head',{title:title}) %>
+<!--<body ng-app="companyProject" ng-controller="mainCtrl as vm">-->
+<body ng-app="companyProject">
+<div>
+    <%- include('partials/menu') %>
+    <div class="container" style="margin-top:50px">
+        <div ng-if="flash" ng-class="{ 'alert alert-dismissible': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }">
+            <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{flash.message}}
+        </div>
+        <div ng-view></div>
+    </div>
+    <%- include('partials/footer') %>
+</div>
+</body>
+</html>
